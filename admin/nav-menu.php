@@ -4,7 +4,7 @@ require_once 'includes/header.php';
 
 $success = $error = '';
 
-// Handle Delete
+
 if (isset($_GET['delete'])) {
     $id = (int)$_GET['delete'];
     if ($conn->query("DELETE FROM nav_menu WHERE id = $id")) {
@@ -14,7 +14,7 @@ if (isset($_GET['delete'])) {
     }
 }
 
-// Handle Add/Edit
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $menu_name = sanitize($_POST['menu_name']);
     $menu_link = sanitize($_POST['menu_link']);
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $is_active = isset($_POST['is_active']) ? 1 : 0;
 
     if (isset($_POST['edit_id']) && $_POST['edit_id']) {
-        // Update
+    
         $id = (int)$_POST['edit_id'];
         $sql = "UPDATE nav_menu SET menu_name = ?, menu_link = ?, menu_order = ?, is_active = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Error updating menu item!';
         }
     } else {
-        // Insert
+       
         $sql = "INSERT INTO nav_menu (menu_name, menu_link, menu_order, is_active) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssii", $menu_name, $menu_link, $menu_order, $is_active);
@@ -47,14 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Get edit data if editing
 $edit_data = null;
 if (isset($_GET['edit'])) {
     $id = (int)$_GET['edit'];
     $edit_data = $conn->query("SELECT * FROM nav_menu WHERE id = $id")->fetch_assoc();
 }
 
-// Get all menu items
+
 $menu_items = $conn->query("SELECT * FROM nav_menu ORDER BY menu_order ASC");
 ?>
 

@@ -4,7 +4,6 @@ require_once 'includes/header.php';
 
 $success = $error = '';
 
-// Handle Delete
 if (isset($_GET['delete'])) {
     $id = (int)$_GET['delete'];
     $car = $conn->query("SELECT car_image FROM latest_cars WHERE id = $id")->fetch_assoc();
@@ -20,7 +19,7 @@ if (isset($_GET['delete'])) {
     }
 }
 
-// Handle Add/Edit
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $car_name = sanitize($_POST['car_name']);
     $price = sanitize($_POST['price']);
@@ -38,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $car_image = $existing['car_image'];
     }
 
-    // Handle image upload
     if (isset($_FILES['car_image']) && $_FILES['car_image']['error'] === 0) {
         $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         $filename = $_FILES['car_image']['name'];

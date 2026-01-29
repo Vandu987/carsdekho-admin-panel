@@ -4,10 +4,10 @@ require_once 'includes/header.php';
 
 $success = $error = '';
 
-// Get current settings
+
 $settings = $conn->query("SELECT * FROM footer_settings WHERE id = 1")->fetch_assoc();
 
-// Handle form submission
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $about_text = sanitize($_POST['about_text']);
     $address = sanitize($_POST['address']);

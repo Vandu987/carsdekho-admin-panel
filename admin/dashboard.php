@@ -2,7 +2,7 @@
 $page_title = 'Dashboard';
 require_once 'includes/header.php';
 
-// Get counts
+
 $banners_count = $conn->query("SELECT COUNT(*) as count FROM banners")->fetch_assoc()['count'];
 $searched_count = $conn->query("SELECT COUNT(*) as count FROM most_searched_cars")->fetch_assoc()['count'];
 $latest_count = $conn->query("SELECT COUNT(*) as count FROM latest_cars")->fetch_assoc()['count'];

@@ -4,10 +4,10 @@ require_once 'includes/header.php';
 
 $success = $error = '';
 
-// Get current settings
+
 $settings = $conn->query("SELECT * FROM header_settings WHERE id = 1")->fetch_assoc();
 
-// Handle form submission
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $logo_text = sanitize($_POST['logo_text']);
     $phone = sanitize($_POST['phone']);
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $logo_image = $settings['logo_image'];
 
-    // Handle logo upload
+   
     if (isset($_FILES['logo_image']) && $_FILES['logo_image']['error'] === 0) {
         $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         $filename = $_FILES['logo_image']['name'];
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $upload_path = '../uploads/logo/' . $new_filename;
 
             if (move_uploaded_file($_FILES['logo_image']['tmp_name'], $upload_path)) {
-                // Delete old logo if exists
+             
                 if ($logo_image && file_exists('../uploads/logo/' . $logo_image)) {
                     unlink('../uploads/logo/' . $logo_image);
                 }
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->execute()) {
             $success = 'Header settings updated successfully!';
-            // Refresh settings
+           
             $settings = $conn->query("SELECT * FROM header_settings WHERE id = 1")->fetch_assoc();
         } else {
             $error = 'Error updating settings!';

@@ -1,7 +1,7 @@
 <?php
 require_once '../config.php';
 
-// If already logged in, redirect to dashboard
+
 if (isAdminLoggedIn()) {
     redirect('dashboard.php');
 }

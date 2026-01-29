@@ -135,7 +135,7 @@ if (!isAdminLoggedIn()) {
     </style>
 </head>
 <body>
-    <!-- Sidebar -->
+ 
     <div class="sidebar">
         <div class="sidebar-brand">
             <i class="fas fa-car"></i>CarsDekho
@@ -152,5 +152,5 @@ if (!isAdminLoggedIn()) {
         </ul>
     </div>
 
-    <!-- Main Content -->
+   
     <div class="main-content">

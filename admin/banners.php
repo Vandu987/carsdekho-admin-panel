@@ -4,13 +4,13 @@ require_once 'includes/header.php';
 
 $success = $error = '';
 
-// Handle Delete
+
 if (isset($_GET['delete'])) {
     $id = (int)$_GET['delete'];
-    // Get image name first
+ 
     $banner = $conn->query("SELECT image FROM banners WHERE id = $id")->fetch_assoc();
     if ($banner) {
-        // Delete image file
+
         if (file_exists('../uploads/banners/' . $banner['image'])) {
             unlink('../uploads/banners/' . $banner['image']);
         }
@@ -22,7 +22,7 @@ if (isset($_GET['delete'])) {
     }
 }
 
-// Handle Add/Edit
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = sanitize($_POST['title']);
     $subtitle = sanitize($_POST['subtitle']);
@@ -34,13 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $image = '';
     $edit_id = isset($_POST['edit_id']) ? (int)$_POST['edit_id'] : 0;
 
-    // Get existing image if editing
+  
     if ($edit_id) {
         $existing = $conn->query("SELECT image FROM banners WHERE id = $edit_id")->fetch_assoc();
         $image = $existing['image'];
     }
 
-    // Handle image upload
+  
     if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
         $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         $filename = $_FILES['image']['name'];
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $upload_path = '../uploads/banners/' . $new_filename;
 
             if (move_uploaded_file($_FILES['image']['tmp_name'], $upload_path)) {
-                // Delete old image if updating
+         
                 if ($image && file_exists('../uploads/banners/' . $image)) {
                     unlink('../uploads/banners/' . $image);
                 }
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$error) {
         if ($edit_id) {
-            // Update
+          
             $sql = "UPDATE banners SET title = ?, subtitle = ?, image = ?, button_text = ?, button_link = ?, banner_order = ?, is_active = ? WHERE id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("sssssiis", $title, $subtitle, $image, $button_text, $button_link, $banner_order, $is_active, $edit_id);
@@ -88,14 +88,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Get edit data
+
 $edit_data = null;
 if (isset($_GET['edit'])) {
     $id = (int)$_GET['edit'];
     $edit_data = $conn->query("SELECT * FROM banners WHERE id = $id")->fetch_assoc();
 }
 
-// Get all banners
+
 $banners = $conn->query("SELECT * FROM banners ORDER BY banner_order ASC");
 ?>
 
